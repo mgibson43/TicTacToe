@@ -1,0 +1,66 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  transition: all 0.2s;
+}
+
+html {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+h1 {
+  color: #333;
+  font-size: 52px;
+  font-weight: 700;
+}
+
+/* General Styling */
+
+.container {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.btn {
+  border: none;
+  color: #eee;
+  background-color: #164e63;
+
+  font-size: 24px;
+  font-weight: 600;
+
+  width: 20rem;
+  height: 4rem;
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+.btn:hover,
+.btn:active {
+  background-color: #155e75;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* menu styling */
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 1rem;
+}
+
+.menu-btns {
+  display: flex;
+  gap: 1rem;
+}
+
