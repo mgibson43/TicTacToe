@@ -85,10 +85,23 @@ h2 {
 .board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  min-height: 30rem;
-  min-width: 30rem;
+  /* min-height: 30rem;
+  min-width: 30rem; */
   box-shadow: 2px 2px 8px rgba(0,0,0,0.4);
   border-radius: 8px;
+}
+
+.tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 44px;
+  font-weight: 600;
+
+  height: 8rem;
+
+  color: #333;
 }
 
 .tile:hover {
