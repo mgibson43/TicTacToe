@@ -1,5 +1,9 @@
 'use strict'
 
+const tictactoe = document.querySelector('.game');
+const tictactoeMenu = document.querySelector('.menu');
+const pvp = document.querySelector('.pvp-btn');
+
 const game = (() => {
   const tiles = [];
   const players = [];
@@ -15,6 +19,7 @@ const game = (() => {
   ];
   const board = document.querySelector('.board');
   const results = document.querySelector('.game-results');
+  const title = document.querySelector('.title');
   const createBoard = function() {
     for (let i = 0; i < 9; i++) {
       const div = document.createElement('div');
@@ -31,7 +36,7 @@ const game = (() => {
     this.textContent = players.find(player => player.turn === true).char;
     this.removeEventListener('click', takeTurn);
     const status = checkWin(count);
-    console.log(status);
+    if (status === 'win' || status === 'draw') endGame(status);
     changeTurn();
   }
 
@@ -43,6 +48,7 @@ const game = (() => {
   
   const checkWin = function(count) {
     let status = '';
+    if (count < 3) return status = 'pending'; 
     winCases.forEach(condition => {
       const one = tiles[condition[0]].textContent;
       const two = tiles[condition[1]].textContent;
@@ -51,9 +57,15 @@ const game = (() => {
       if (one != '' && one === two && two === three) status = 'win';
     });
     if (status === '') {
-      count === 9 ? status = 'Draw' : status = 'Pending';
+      count === 9 ? status = 'draw' : status = 'pending';
     } 
     return status;
+  }
+
+  const endGame = function(status) {
+    console.log(status);
+    status === 'win' ? results.textContent = `${players.find(player => player.turn === true).name} wins!` : results.textContent = 'Draw';
+    tiles.forEach(tile => tile.removeEventListener('click', takeTurn));
   }
 
   const player = (name, turn, char) => {
@@ -61,6 +73,7 @@ const game = (() => {
   }
 
   const playerVsPlayer = (name1, name2) => {
+    title.textContent = 'Player Vs Player';
     players.push(player(name1, true, 'X'));
     players.push(player(name2, false, 'O'));
   }
@@ -72,10 +85,12 @@ const game = (() => {
     player,
     playerVsPlayer
   }
-
 })();
 
 
-
-game.createBoard();
-game.playerVsPlayer('Player 1', 'Player 2');
+pvp.addEventListener('click', function() {
+  game.createBoard();
+  game.playerVsPlayer('Player 1', 'Player 2');
+  tictactoeMenu.classList.add('hidden');
+  tictactoe.classList.remove('hidden');
+})

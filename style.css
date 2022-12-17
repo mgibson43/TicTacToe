@@ -26,7 +26,7 @@ h2 {
 
 .container {
   position: absolute;
-  top: 30vh;
+  top: 40vh;
   left: 50%;
   transform: translate(-50%, -50%);
 }

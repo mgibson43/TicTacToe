@@ -12,28 +12,26 @@
   <title>Tic-Tac-Toe</title>
 </head>
 <body>
-  <div class="container">
-    <nav class="menu hidden">
-      <h1>Tic Tac Toe</h1>
-      <div class="menu-btns">
-        <button class="btn">Player vs Player</button>
-        <button class="btn">Player vs Computer</button>
-      </div>
-    </nav>
-    
-    <article class="game">
-      <h2>Player vs Player</h2>
-      <div class="board">
+  <nav class="menu container">
+    <h1>Tic Tac Toe</h1>
+    <div class="menu-btns">
+      <button class="btn pvp-btn">Player vs Player</button>
+      <button class="btn pvc-btn">Player vs Computer</button>
+    </div>
+  </nav>
+  
+  <article class="game container hidden">
+    <h2 class="title"></h2>
+    <div class="board">
         
+    </div>
+    <div class="results-box">
+      <h2 class="game-results"></h2>
+      <div class="btn-box">
+        <button class="btn restart-btn">Restart</button>
+        <button class="btn menu-btn">Menu</button>
       </div>
-      <div class="results-box">
-        <h2 class="game-results">X wins!</h2>
-        <div class="btn-box">
-          <button class="btn">Play Again</button>
-          <button class="btn">Menu</button>
-        </div>
-      </div>
-    </article>
-  </div>
+    </div>
+  </article>
 </body>
 </html>
