@@ -17,9 +17,20 @@ const game = (() => {
     [0, 4, 8], 
     [2, 4, 6]
   ];
+
   const board = document.querySelector('.board');
   const results = document.querySelector('.game-results');
   const title = document.querySelector('.title');
+  const restart = document.querySelector('.restart-btn');
+
+  restart.addEventListener('click', function() {
+    players.length = 0;
+    tiles.forEach(tile => board.removeChild(tile));
+    tiles.length = 0;
+    game.createBoard()
+    game.playerVsPlayer();
+  });
+
   const createBoard = function() {
     for (let i = 0; i < 9; i++) {
       const div = document.createElement('div');
