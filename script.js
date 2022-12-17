@@ -2,7 +2,6 @@
 
 const tictactoe = document.querySelector('.game');
 const tictactoeMenu = document.querySelector('.menu');
-const pvp = document.querySelector('.pvp-btn');
 
 const game = (() => {
   const tiles = [];
@@ -22,14 +21,28 @@ const game = (() => {
   const results = document.querySelector('.game-results');
   const title = document.querySelector('.title');
   const restart = document.querySelector('.restart-btn');
+  const pvp = document.querySelector('.pvp-btn');
+  const menuBtn = document.querySelector('.menu-btn');
 
   restart.addEventListener('click', function() {
-    players.length = 0;
-    tiles.forEach(tile => board.removeChild(tile));
-    tiles.length = 0;
-    game.createBoard()
-    game.playerVsPlayer();
+    clearBoard();
+    createBoard()
+    playerVsPlayer();
   });
+
+  pvp.addEventListener('click', function() {
+    createBoard();
+    playerVsPlayer('Player 1', 'Player 2');
+    tictactoeMenu.classList.add('hidden');
+    tictactoe.classList.remove('hidden');
+  });
+
+  menuBtn.addEventListener('click', function() {
+    clearBoard();
+    tictactoe.classList.add('hidden');
+    tictactoeMenu.classList.remove('hidden');
+  });
+  
 
   const createBoard = function() {
     for (let i = 0; i < 9; i++) {
@@ -89,6 +102,13 @@ const game = (() => {
     players.push(player(name2, false, 'O'));
   }
 
+  const clearBoard = function() {
+    players.length = 0;
+    tiles.forEach(tile => board.removeChild(tile));
+    tiles.length = 0;
+    results.textContent = '';
+  }
+
   return {
     tiles,
     createBoard,
@@ -97,11 +117,3 @@ const game = (() => {
     playerVsPlayer
   }
 })();
-
-
-pvp.addEventListener('click', function() {
-  game.createBoard();
-  game.playerVsPlayer('Player 1', 'Player 2');
-  tictactoeMenu.classList.add('hidden');
-  tictactoe.classList.remove('hidden');
-})
