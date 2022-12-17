@@ -4,6 +4,7 @@ const tictactoe = document.querySelector('.game');
 const tictactoeMenu = document.querySelector('.menu');
 
 const game = (() => {
+  let count = 0;
   const tiles = [];
   const players = [];
   const winCases = [
@@ -54,9 +55,8 @@ const game = (() => {
     }
   }
 
-  let count = 0;
   const takeTurn = function() {
-    count++
+    count++;
     this.textContent = players.find(player => player.turn === true).char;
     this.removeEventListener('click', takeTurn);
     const status = checkWin(count);
@@ -87,7 +87,6 @@ const game = (() => {
   }
 
   const endGame = function(status) {
-    console.log(status);
     status === 'win' ? results.textContent = `${players.find(player => player.turn === true).name} wins!` : results.textContent = 'Draw';
     tiles.forEach(tile => tile.removeEventListener('click', takeTurn));
   }
@@ -106,6 +105,7 @@ const game = (() => {
     players.length = 0;
     tiles.forEach(tile => board.removeChild(tile));
     tiles.length = 0;
+    count = 0;
     results.textContent = '';
   }
 
