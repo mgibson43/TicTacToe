@@ -28,7 +28,7 @@ const game = (() => {
   restart.addEventListener('click', function() {
     clearBoard();
     createBoard()
-    playerVsPlayer();
+    playerVsPlayer('Player 1', 'Player 2');
   });
 
   pvp.addEventListener('click', function() {
