@@ -3,19 +3,25 @@
 const game = (() => {
   const tiles = [];
   const players = [];
+  const winCases = [
+    [0, 1, 2], 
+    [3, 4, 5],
+    [6, 7, 8], 
+    [0, 3, 6], 
+    [1, 4, 7], 
+    [2, 5, 8],
+    [0, 4, 8], 
+    [2, 4, 6]
+  ];
   const board = document.querySelector('.board');
   const results = document.querySelector('.game-results');
   const createBoard = function() {
-    for (let i = 1; i < 4; i++) {
-      for (let j = 1; j < 4; j++) {
-        const div = document.createElement('div');
-        div.classList.add('tile');
-        div.dataset.yIndex = i;
-        div.dataset.xIndex = j;
-        div.addEventListener('click', takeTurn);
-        board.appendChild(div);
-        tiles[i, j] = div;
-      }
+    for (let i = 0; i < 9; i++) {
+      const div = document.createElement('div');
+      div.classList.add('tile');
+      div.addEventListener('click', takeTurn);
+      board.appendChild(div);
+      tiles.push(div);
     }
   }
 
@@ -23,10 +29,10 @@ const game = (() => {
   const takeTurn = function() {
     count++
     this.textContent = players.find(player => player.turn === true).char;
-    changeTurn();
     this.removeEventListener('click', takeTurn);
-    checkWin(count);
-    return count;
+    const status = checkWin(count);
+    console.log(status);
+    changeTurn();
   }
 
   const changeTurn = function() {
@@ -36,12 +42,18 @@ const game = (() => {
   }
   
   const checkWin = function(count) {
-    if (tiles[0].textContent === tiles[1].textContent &&
-       tiles[1].textContent === tiles[2].textContent) {
-      console.log('win');
-    } else if (count === 9) {
-      results.textContent = 'Draw';
-    }
+    let status = '';
+    winCases.forEach(condition => {
+      const one = tiles[condition[0]].textContent;
+      const two = tiles[condition[1]].textContent;
+      const three = tiles[condition[2]].textContent;
+
+      if (one != '' && one === two && two === three) status = 'win';
+    });
+    if (status === '') {
+      count === 9 ? status = 'Draw' : status = 'Pending';
+    } 
+    return status;
   }
 
   const player = (name, turn, char) => {
