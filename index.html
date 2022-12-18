@@ -12,13 +12,30 @@
   <title>Tic-Tac-Toe</title>
 </head>
 <body>
-  <nav class="menu container">
+  <menu class="menu container">
     <h1>Tic Tac Toe</h1>
     <div class="menu-btns">
       <button class="btn pvp-btn">Player vs Player</button>
       <button class="btn pvc-btn">Player vs Computer</button>
     </div>
-  </nav>
+  </menu>
+
+  <aside class="pvp-name-entry container hidden">
+    <div class="pvp-players">
+      <div>
+        <label for="player1">Player 1</label>
+        <input type="text" id="player1" value="Player 1" min="1">
+      </div>
+      <div>
+        <label for="player2">Player 2</label>
+        <input type="text" id="player2" value="Player 2" minlength="1">
+      </div>
+    </div>
+    <div class="pvp-name-entry-btns">
+      <button class="btn play-pvp-btn">Play</button>
+      <button class="btn back-btn">Back</button>
+    </div>
+  </aside>
   
   <article class="game container hidden">
     <h2 class="title"></h2>

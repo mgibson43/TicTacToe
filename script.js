@@ -1,9 +1,8 @@
-'use strict'
-
-const tictactoe = document.querySelector('.game');
-const tictactoeMenu = document.querySelector('.menu');
 
 const game = (() => {
+  'use strict'
+
+  // Initializing variables
   let count = 0;
   const tiles = [];
   const players = [];
@@ -18,33 +17,24 @@ const game = (() => {
     [2, 4, 6]
   ];
 
+  // DOM element selections
   const board = document.querySelector('.board');
   const results = document.querySelector('.game-results');
+  const pvpNameEntry = document.querySelector('.pvp-name-entry');
   const title = document.querySelector('.title');
   const restart = document.querySelector('.restart-btn');
+  const playPVP = document.querySelector('.play-pvp-btn')
   const pvp = document.querySelector('.pvp-btn');
   const menuBtn = document.querySelector('.menu-btn');
+  const backBtn = document.querySelector('.back-btn');
+  const tictactoe = document.querySelector('.game');
+  const tictactoeMenu = document.querySelector('.menu');
+  const player1 = document.getElementById('player1');
+  const player2 = document.getElementById('player2');
 
-  restart.addEventListener('click', function() {
-    clearBoard();
-    createBoard()
-    playerVsPlayer('Player 1', 'Player 2');
-  });
+  // FUNCTIONS
 
-  pvp.addEventListener('click', function() {
-    createBoard();
-    playerVsPlayer('Player 1', 'Player 2');
-    tictactoeMenu.classList.add('hidden');
-    tictactoe.classList.remove('hidden');
-  });
-
-  menuBtn.addEventListener('click', function() {
-    clearBoard();
-    tictactoe.classList.add('hidden');
-    tictactoeMenu.classList.remove('hidden');
-  });
-  
-
+  // Creates game board
   const createBoard = function() {
     for (let i = 0; i < 9; i++) {
       const div = document.createElement('div');
@@ -55,6 +45,7 @@ const game = (() => {
     }
   }
 
+  // Plays current players turn
   const takeTurn = function() {
     count++;
     this.textContent = players.find(player => player.turn === true).char;
@@ -64,12 +55,14 @@ const game = (() => {
     changeTurn();
   }
 
+  // Changes players turns
   const changeTurn = function() {
     players.forEach(player => {
       player.turn === true ? player.turn = false : player.turn = true;
     });
   }
   
+  // Checks for win conditions
   const checkWin = function(count) {
     let status = '';
     if (count < 3) return status = 'pending'; 
@@ -86,34 +79,78 @@ const game = (() => {
     return status;
   }
 
+  // Ends game, disabling buttons and displaying winner
   const endGame = function(status) {
     status === 'win' ? results.textContent = `${players.find(player => player.turn === true).name} wins!` : results.textContent = 'Draw';
     tiles.forEach(tile => tile.removeEventListener('click', takeTurn));
   }
 
+  // Player factory function
   const player = (name, turn, char) => {
     return { name, turn, char }
   }
 
-  const playerVsPlayer = (name1, name2) => {
+  // Starts PVP game
+  const playerVsPlayer = function() {
     title.textContent = 'Player Vs Player';
-    players.push(player(name1, true, 'X'));
-    players.push(player(name2, false, 'O'));
+    players.length = 0;
+    createBoard();
+    players.push(player((player1.value == '' ? 'Player 1' : player1.value), true, 'X'));
+    players.push(player((player1.value == '' ? 'Player 2' : player2.value), false, 'O'));
+    pvpNameEntry.classList.add('hidden');
+    tictactoe.classList.remove('hidden');
   }
 
+  // Changes screen to player name entry
+  const playerNames = function() {
+    tictactoeMenu.classList.add('hidden');
+    pvpNameEntry.classList.remove('hidden');
+  }
+
+  // Clears tiles and resets moves
   const clearBoard = function() {
-    players.length = 0;
     tiles.forEach(tile => board.removeChild(tile));
     tiles.length = 0;
     count = 0;
     results.textContent = '';
   }
 
-  return {
-    tiles,
-    createBoard,
-    takeTurn,
-    player,
-    playerVsPlayer
+  // Restarts current game with current players
+  const restartGame = function() {
+    clearBoard();
+    createBoard()
+    players.find(player => player.char === 'X').turn = true;
+    players.find(player => player.char === 'O').turn = false;
   }
+
+  // Returns to main menu
+  const returnToMenu = function() {
+    clearBoard();
+    resetNames();
+    tictactoe.classList.add('hidden');
+    tictactoeMenu.classList.remove('hidden');
+  }
+
+  const back = function () {
+    resetNames();
+    pvpNameEntry.classList.add('hidden');
+    tictactoeMenu.classList.remove('hidden');
+  }
+
+  const resetNames = function() {
+    player1.value = 'Player 1';
+    player2.value = 'Player 2';
+  }
+
+  // EVENT LISTENERS
+
+  restart.addEventListener('click', restartGame);
+
+  playPVP.addEventListener('click', playerVsPlayer);
+
+  menuBtn.addEventListener('click', returnToMenu);
+
+  pvp.addEventListener('click', playerNames);
+
+  backBtn.addEventListener('click', back);
 })();

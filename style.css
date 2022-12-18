@@ -7,16 +7,15 @@
 
 html {
   font-family: 'Noto Sans', sans-serif;
+  color: #333;
 }
 
 h1 {
-  color: #333;
   font-size: 52px;
   font-weight: 700;
 }
 
 h2 {
-  color: #333;
   font-size: 44px;
   font-weight: 600;
   text-align: center;
@@ -68,6 +67,51 @@ h2 {
 }
 
 .menu-btns {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Player selection styling */
+.pvp-name-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.pvp-players {
+  display: flex;
+  gap: 1rem;
+}
+
+.pvp-players div {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+input {
+  width: 20rem;
+  height: 2rem;
+  padding: 1rem;
+
+  border: none;
+  border-radius: 8px;
+  
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+}
+
+.pvp-name-entry-btns {
   display: flex;
   gap: 1rem;
 }
