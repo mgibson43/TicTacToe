@@ -54,6 +54,7 @@ const game = (() => {
     dumbAI();
     let status = checkWin(count);
     if (status === 'win' || status === 'draw') endGame(status);
+    tiles.forEach(tile => tile.classList.remove('disable'));
     changeTurn();
   }
 
@@ -74,7 +75,8 @@ const game = (() => {
       // Take turns for Computer
       if (title.textContent == 'Player Vs Computer' && players.find(player => player.name == 'Computer').turn == true) {
         count++;
-        setTimeout(takeComputerTurn, 500);
+        tiles.forEach(tile => tile.classList.add('disable'));
+        setTimeout(takeComputerTurn, 250);
       }
     }
   }

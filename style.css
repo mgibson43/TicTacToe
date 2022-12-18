@@ -191,3 +191,7 @@ input:focus {
   gap: 1rem;
   margin-bottom: 2rem;
 }
+
+.disable {
+  pointer-events: none;
+}
