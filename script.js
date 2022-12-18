@@ -54,9 +54,19 @@ const game = (() => {
     count++;
     this.textContent = players.find(player => player.turn === true).char;
     this.removeEventListener('click', takeTurn);
-    const status = checkWin(count);
-    if (status === 'win' || status === 'draw') endGame(status);
+    let status = checkWin(count);
+    if (status === 'win' || status === 'draw') {
+      endGame(status);
+      return;
+    };
     changeTurn();
+
+    if (title.textContent == 'Player Vs Computer' && players.find(player => player.name == 'Computer').turn == true) {
+      dumbAI(count);
+      let status = checkWin(count);
+      if (status === 'win' || status === 'draw') endGame(status);
+      changeTurn();
+    }
   }
 
   // Changes players turns
@@ -166,12 +176,16 @@ const game = (() => {
   }
 
   // Dumb random number generator to select moves for computer
-  const dumbAI = function() {
-    let selectedTile = Math.floor(Math.random() * 10);
+  const dumbAI = function(count) {
+    if (count === 9) return;
+    let selectedTile = Math.floor(Math.random() * 9) ;
+    console.log(selectedTile);
+    console.log(tiles[selectedTile].textContent);
     if (tiles[selectedTile].textContent == '') {
-      tiles[selectedTile].textContent == players.find(player => player.turn == true).char;
+      tiles[selectedTile].textContent = players.find(player => player.turn == true).char;
       tiles[selectedTile].removeEventListener('click', takeTurn);
     } else {
+      console.log('hi');
       dumbAI();
     }
   }
