@@ -49,6 +49,14 @@ const game = (() => {
     }
   }
 
+  // Takes computers turn
+  const takeComputerTurn = function() {
+    dumbAI();
+    let status = checkWin(count);
+    if (status === 'win' || status === 'draw') endGame(status);
+    changeTurn();
+  }
+
   // Plays current players turn
   const takeTurn = function() {
     count++;
@@ -66,10 +74,7 @@ const game = (() => {
       // Take turns for Computer
       if (title.textContent == 'Player Vs Computer' && players.find(player => player.name == 'Computer').turn == true) {
         count++;
-        setTimeout(dumbAI(), 1000);
-        let status = checkWin(count);
-        if (status === 'win' || status === 'draw') endGame(status);
-        changeTurn();
+        setTimeout(takeComputerTurn, 500);
       }
     }
   }
