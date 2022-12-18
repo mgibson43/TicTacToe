@@ -2,6 +2,12 @@
 
 This is an assignment from The Odin Projects' JavaScript path.
 
-First I'm uploading the project with player vs player functionality, but in the near future I would like to add functionality for player vs computer games.
+Project currently has functionality for Player vs Player and Player vs Computer.
 
-Currently there is a bug with restarting the game that causes a win to be shown as undefined.
+In Player vs Player, Player 1 always goes first and uses 'X' as their token.
+
+In Player vs Computer, the player always goes first and uses 'X' as their token.
+
+In the future I might make it so the player who moves first is random, but for now it is fixed.
+
+Planning to make a smarter AI and allow the user to choose between smart and dumb AI although this addition is not guaranteed.

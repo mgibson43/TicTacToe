@@ -29,7 +29,7 @@ const game = (() => {
   const pvp = document.querySelector('.pvp-btn');
   const pve = document.querySelector('.pve-btn');
   const menuBtn = document.querySelector('.menu-btn');
-  const backBtn = document.querySelector('.back-btn');
+  const backBtn = document.querySelectorAll('.back-btn');
   const tictactoe = document.querySelector('.game');
   const tictactoeMenu = document.querySelector('.menu');
   const pvePlayer = document.getElementById('player');
@@ -52,20 +52,25 @@ const game = (() => {
   // Plays current players turn
   const takeTurn = function() {
     count++;
+
     this.textContent = players.find(player => player.turn === true).char;
     this.removeEventListener('click', takeTurn);
     let status = checkWin(count);
     if (status === 'win' || status === 'draw') {
       endGame(status);
-      return;
     };
-    changeTurn();
-
-    if (title.textContent == 'Player Vs Computer' && players.find(player => player.name == 'Computer').turn == true) {
-      dumbAI(count);
-      let status = checkWin(count);
-      if (status === 'win' || status === 'draw') endGame(status);
+    console.log(count);
+    if (count < 9 && !(status === 'win' || status === 'draw')) {
       changeTurn();
+
+      // Take turns for Computer
+      if (title.textContent == 'Player Vs Computer' && players.find(player => player.name == 'Computer').turn == true) {
+        count++;
+        setTimeout(dumbAI(), 1000);
+        let status = checkWin(count);
+        if (status === 'win' || status === 'draw') endGame(status);
+        changeTurn();
+      }
     }
   }
 
@@ -165,6 +170,7 @@ const game = (() => {
   const back = function () {
     resetNames();
     pvpNameEntry.classList.add('hidden');
+    pveNameEntry.classList.add('hidden');
     tictactoeMenu.classList.remove('hidden');
   }
 
@@ -176,16 +182,12 @@ const game = (() => {
   }
 
   // Dumb random number generator to select moves for computer
-  const dumbAI = function(count) {
-    if (count === 9) return;
+  const dumbAI = function() {
     let selectedTile = Math.floor(Math.random() * 9) ;
-    console.log(selectedTile);
-    console.log(tiles[selectedTile].textContent);
     if (tiles[selectedTile].textContent == '') {
       tiles[selectedTile].textContent = players.find(player => player.turn == true).char;
       tiles[selectedTile].removeEventListener('click', takeTurn);
     } else {
-      console.log('hi');
       dumbAI();
     }
   }
@@ -204,7 +206,7 @@ const game = (() => {
 
   pve.addEventListener('click', playerName);
 
-  backBtn.addEventListener('click', back);
+  backBtn.forEach(btn => btn.addEventListener('click', back));
 
   return {
     dumbAI,
