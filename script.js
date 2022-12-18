@@ -21,14 +21,18 @@ const game = (() => {
   const board = document.querySelector('.board');
   const results = document.querySelector('.game-results');
   const pvpNameEntry = document.querySelector('.pvp-name-entry');
+  const pveNameEntry = document.querySelector('.pve-name-entry');
   const title = document.querySelector('.title');
   const restart = document.querySelector('.restart-btn');
-  const playPVP = document.querySelector('.play-pvp-btn')
+  const playPVP = document.querySelector('.play-pvp-btn');
+  const playPVE = document.querySelector('.play-pve-btn');
   const pvp = document.querySelector('.pvp-btn');
+  const pve = document.querySelector('.pve-btn');
   const menuBtn = document.querySelector('.menu-btn');
   const backBtn = document.querySelector('.back-btn');
   const tictactoe = document.querySelector('.game');
   const tictactoeMenu = document.querySelector('.menu');
+  const pvePlayer = document.getElementById('player');
   const player1 = document.getElementById('player1');
   const player2 = document.getElementById('player2');
 
@@ -101,10 +105,26 @@ const game = (() => {
     tictactoe.classList.remove('hidden');
   }
 
-  // Changes screen to player name entry
+  // Starts PVE game
+  const playerVsComputer = function() {
+    title.textContent = 'Player Vs Computer';
+    players.length = 0;
+    createBoard();
+    players.push(player((pvePlayer.value == '' ? 'Player' : pvePlayer.value), true, 'X'));
+    players.push(player('Computer', false, 'O'));
+    pveNameEntry.classList.add('hidden');
+    tictactoe.classList.remove('hidden');
+  }
+
+  // Changes screen to player name entry for pvp
   const playerNames = function() {
     tictactoeMenu.classList.add('hidden');
     pvpNameEntry.classList.remove('hidden');
+  }
+
+  const playerName = function() {
+    tictactoeMenu.classList.add('hidden');
+    pveNameEntry.classList.remove('hidden');
   }
 
   // Clears tiles and resets moves
@@ -123,7 +143,7 @@ const game = (() => {
     players.find(player => player.char === 'O').turn = false;
   }
 
-  // Returns to main menu
+  // Returns to main menu from game
   const returnToMenu = function() {
     clearBoard();
     resetNames();
@@ -131,15 +151,29 @@ const game = (() => {
     tictactoeMenu.classList.remove('hidden');
   }
 
+  // Returns to main menu from player select
   const back = function () {
     resetNames();
     pvpNameEntry.classList.add('hidden');
     tictactoeMenu.classList.remove('hidden');
   }
 
+  // Resets names in input fields
   const resetNames = function() {
     player1.value = 'Player 1';
     player2.value = 'Player 2';
+    pvePlayer.value = 'Player';
+  }
+
+  // Dumb random number generator to select moves for computer
+  const dumbAI = function() {
+    let selectedTile = Math.floor(Math.random() * 10);
+    if (tiles[selectedTile].textContent == '') {
+      tiles[selectedTile].textContent == players.find(player => player.turn == true).char;
+      tiles[selectedTile].removeEventListener('click', takeTurn);
+    } else {
+      dumbAI();
+    }
   }
 
   // EVENT LISTENERS
@@ -148,9 +182,19 @@ const game = (() => {
 
   playPVP.addEventListener('click', playerVsPlayer);
 
+  playPVE.addEventListener('click', playerVsComputer);
+
   menuBtn.addEventListener('click', returnToMenu);
 
   pvp.addEventListener('click', playerNames);
 
+  pve.addEventListener('click', playerName);
+
   backBtn.addEventListener('click', back);
+
+  return {
+    dumbAI,
+    createBoard,
+    tiles
+  }
 })();
