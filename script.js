@@ -1,5 +1,5 @@
 
-const game = (() => {
+(() => {
   'use strict'
 
   // Initializing variables
@@ -30,8 +30,8 @@ const game = (() => {
   const pve = document.querySelector('.pve-btn');
   const menuBtn = document.querySelector('.menu-btn');
   const backBtn = document.querySelectorAll('.back-btn');
-  const tictactoe = document.querySelector('.game');
-  const tictactoeMenu = document.querySelector('.menu');
+  const ticTacToe = document.querySelector('.game');
+  const ticTacToeMenu = document.querySelector('.menu');
   const pvePlayer = document.getElementById('player');
   const player1 = document.getElementById('player1');
   const player2 = document.getElementById('player2');
@@ -67,7 +67,7 @@ const game = (() => {
     let status = checkWin(count);
     if (status === 'win' || status === 'draw') {
       endGame(status);
-    };
+    }
     console.log(count);
     if (count < 9 && !(status === 'win' || status === 'draw')) {
       changeTurn();
@@ -124,7 +124,7 @@ const game = (() => {
     players.push(player((player1.value == '' ? 'Player 1' : player1.value), true, 'X'));
     players.push(player((player1.value == '' ? 'Player 2' : player2.value), false, 'O'));
     pvpNameEntry.classList.add('hidden');
-    tictactoe.classList.remove('hidden');
+    ticTacToe.classList.remove('hidden');
   }
 
   // Starts PVE game
@@ -135,17 +135,17 @@ const game = (() => {
     players.push(player((pvePlayer.value == '' ? 'Player' : pvePlayer.value), true, 'X'));
     players.push(player('Computer', false, 'O'));
     pveNameEntry.classList.add('hidden');
-    tictactoe.classList.remove('hidden');
+    ticTacToe.classList.remove('hidden');
   }
 
   // Changes screen to player name entry for pvp
   const playerNames = function() {
-    tictactoeMenu.classList.add('hidden');
+    ticTacToeMenu.classList.add('hidden');
     pvpNameEntry.classList.remove('hidden');
   }
 
   const playerName = function() {
-    tictactoeMenu.classList.add('hidden');
+    ticTacToeMenu.classList.add('hidden');
     pveNameEntry.classList.remove('hidden');
   }
 
@@ -169,8 +169,8 @@ const game = (() => {
   const returnToMenu = function() {
     clearBoard();
     resetNames();
-    tictactoe.classList.add('hidden');
-    tictactoeMenu.classList.remove('hidden');
+    ticTacToe.classList.add('hidden');
+    ticTacToeMenu.classList.remove('hidden');
   }
 
   // Returns to main menu from player select
@@ -178,7 +178,7 @@ const game = (() => {
     resetNames();
     pvpNameEntry.classList.add('hidden');
     pveNameEntry.classList.add('hidden');
-    tictactoeMenu.classList.remove('hidden');
+    ticTacToeMenu.classList.remove('hidden');
   }
 
   // Resets names in input fields

@@ -1,0 +1,5 @@
+{
+    "extents": ["airbnb", "prettier"],
+    "plugins": ["prettier"],
+    "rules": {}
+}
